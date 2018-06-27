@@ -1,0 +1,139 @@
+﻿@model Tangy.Models.DoctorViewModel.DoctorViewModel
+@using Tangy.Utility
+@{
+    ViewData["Title"] = "רופאים";
+}
+
+<h2>רופאים במחלקה @Model.MedicalField.Name</h2>
+<hr />
+<p>
+    <a asp-action="Create" asp-route-medicalFieldId="@Model.MedicalField.Id" type="button" class="btn btn-primary">
+        <i class="fas fa-plus"></i>
+        &nbsp; חדש...
+    </a>
+</p>
+
+<div class="form-border">
+    <div class="container">
+        <div class="row font-weight-bold">
+            <div class="col">
+                @Html.DisplayNameFor(model => model.Doctors[0].Name)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(model => model.Doctors[0].Phone)
+            </div>
+            <div class="col">
+                דירוג
+            </div>
+            <div class="col">
+            </div>
+        </div>
+
+        <hr style="border: none;height: 1px;color: #333; background-color: #333;" />
+
+        @foreach (var item in Model.Doctors)
+        {
+            <div class="row">
+                <div class="col">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </div>
+                <div class="col">
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </div>
+                <div class="col">
+                    @{
+                        double scoreSum = 0;
+                        double avgScore = 0;
+
+                        foreach (var review in item.DoctorReviews)
+                        {
+                            scoreSum += review.Score;
+                        }
+
+                        if (item.DoctorReviews.Count > 0)
+                        {
+                            avgScore = scoreSum / item.DoctorReviews.Count;
+                        }
+                    }
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="hidden" value="@avgScore" scoreSum="@scoreSum" count="@item.DoctorReviews.Count" />
+                            <div id="rateYo" therapistId="@item.Id" score="@avgScore" class="rateYoClass"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col btn-group" style="width:150px;" role="group">
+                    @if (User.IsInRole(SD.AdminEndUser))
+                    {
+                        <a type="button" data-toggle="tooltip" title="עדכון" class="btn btn-primary ml-1" href="@Url.Action("Edit/" + item.Id)">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    }
+                    <a type="button" data-toggle="tooltip" title="פרטים" class="btn btn-success ml-1" href="@Url.Action("Details/"+item.Id)">
+                        <i class="far fa-list-alt"></i>
+                    </a>
+                    @if (User.IsInRole(SD.AdminEndUser))
+                    {
+                        <a type="button" data-toggle="tooltip" title="מחיקה" class="btn btn-danger ml-1" href="@Url.Action("Delete/" + item.Id)">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    }
+                    <a type="button" data-toggle="tooltip" title="הוסף ביקורת" class="btn btn-info ml-1" asp-controller="DoctorReview" asp-action="Create" asp-route-doctorId="@item.Id">
+                        <i class="far fa-comment"></i>
+                    </a>
+                    <span data-toggle="modal" data-target="#Modal-@item.Id">
+                        <a type="button" data-toggle="tooltip" title="תציג ביקורות" class="btn btn-light ml-1">
+                            <i class="far fa-thumbs-up"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+
+            <!-- The Modal -->
+            <div class="modal" id="Modal-@item.Id">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">חוות דעת</h4>
+                            @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            @await Html.PartialAsync("_DoctorReviewsPartial", item.DoctorReviews)
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <hr />
+        }
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/jquery.rateyo.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".rateYoClass").each(function (i) {
+                $(this).rateYo({
+                    rating: $(this).attr("score"),
+                    readOnly: true,
+                    starWidth: "20px"
+                })
+                if ($(this).attr("score") == 0) {
+                    $(this).attr("style", "display:none;");
+                }
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+        });
+    </script>
+}

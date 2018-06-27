@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Tangy.Models.TherapyType>
+@{
+    ViewData["Title"] = "Default";
+}
+
+@foreach (var item in Model)
+{
+    <a class="dropdown-item" asp-controller="Therapist" asp-action="Index" asp-route-therapyTypeId="@item.Id">@item.Name</a>
+}

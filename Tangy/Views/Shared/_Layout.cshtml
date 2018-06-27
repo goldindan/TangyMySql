@@ -1,0 +1,134 @@
+﻿@using Tangy.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Tangy</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/Typeahead.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/jquery-ui.min.css" />
+        <link rel="stylesheet" href="~/css/jquery.rateyo.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/Typeahead.css" />
+        <link rel="stylesheet" href="~/css/site.css"/>
+        <link rel="stylesheet" href="~/css/jquery-ui.min.css" />
+        <link rel="stylesheet" href="~/css/jquery.rateyo.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    </environment>
+
+    @*<script src="~/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
+
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' });
+        });
+    </script>*@
+</head>
+<body style="direction:rtl;text-align:right;">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info">
+        <a class="navbar-brand" asp-action="Index" asp-controller="Main">מרכז למשפחות במודיעין</a>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                @if (User.IsInRole(SD.AdminEndUser))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ניהול מערכת
+                        </a>
+                        <div class="dropdown-menu" style="text-align:right;left:unset;" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-controller="TherapyTypes" asp-action="Index">סוגי טיפול</a>
+                            <a class="dropdown-item" asp-controller="MedicalFields" asp-action="Index">מחלקות רפואיות</a>
+                            <a class="dropdown-item" asp-controller="Users" asp-action="Index">משתמשים</a>
+                        </div>
+                    </li>
+                }
+                @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            טיפולים
+                        </a>
+                        <div class="dropdown-menu" style="text-align:right;left:unset;" aria-labelledby="navbarDropdown">
+                            @await Component.InvokeAsync("TherapyTypes")
+                        </div>
+                    </li>
+                }
+                @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            רופאים
+                        </a>
+                        <div class="dropdown-menu" style="text-align:right;left:unset;" aria-labelledby="navbarDropdown">
+                            @await Component.InvokeAsync("MedicalFields")
+                        </div>
+                    </li>
+                }
+                @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            זכויות
+                        </a>
+                    </li>
+                }
+                @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            קישורים
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="form-inline">
+            @await Html.PartialAsync("_loginPartial")
+        </div>
+
+    </nav>
+    <div class="container body-content">
+        <br />
+        @RenderBody()
+        <br />
+        <hr />
+    </div>
+
+    @*<footer class="footer">
+        <div class="cont">
+            <p class="text-muted" style="text-align:right;">&copy; 2018 - המרכז למשפחה, למשפחות לילדים עם צרכים מיוחדים</p>
+        </div>
+    </footer>*@
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/jquery-ui.min.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/js/jquery-ui.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

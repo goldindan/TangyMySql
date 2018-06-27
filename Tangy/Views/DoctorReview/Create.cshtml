@@ -1,0 +1,56 @@
+﻿@model Tangy.Models.DoctorReview
+@{
+    ViewData["Title"] = "יצירת";
+}
+
+<h2>ביקורת חדשה עבור @Model.Doctor.Name בתחום @Model.Doctor.MedicalField.Name</h2>
+<br />
+
+<hr />
+<form asp-action="Create">
+    <input asp-for="DoctorId" hidden />
+    <div class="form-border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Description" class="control-label"></label>
+            </div>
+            <div class="col-4">
+                <textarea rows="5" asp-for="Description" class="form-control"></textarea>
+            </div>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Score" class="control-label"></label>
+            </div>
+            <div class="col-4">
+                <div id="rateYo"></div>
+                <input type="hidden" id="Score" name="Score" />
+            </div>
+            <span asp-validation-for="Score" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="שמירה" class="btn btn-primary" /> &nbsp;
+            <a asp-action="Index" asp-controller="Doctor" asp-route-medicalFieldId="@Model.Doctor.MedicalFieldId" class="btn btn-success">חזרה לרשימה</a>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <script src="~/js/jquery.rateyo.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#rateYo").rateYo({
+                fullStar: true,
+                starWidth: "30px",
+                onSet: function (rating, rateYoInstance) {
+                    $("#Score").val(rating);
+                }
+            });
+        })
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

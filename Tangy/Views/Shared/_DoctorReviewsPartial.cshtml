@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Tangy.Models.DoctorReview>
+@using System.Security.Claims
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<table class="table table-striped rounded" style="background-color:aliceblue; margin-bottom:20px;">
+    @foreach (var item in Model)
+    {
+        ClaimsIdentity claimsIdentity = (ClaimsIdentity)User.Identity;
+        Claim claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+
+        <tr style="width:100%;">
+            <td style="width:100%">
+                <div class="row">
+                    <div class="col-9">
+                        <div class="small">@await Component.InvokeAsync("UserNameForReview", new { userId = item.CreateUserId })</div>
+                        <div class="font-italic">"@item.Description"</div>
+                        <div class="float-left small">@item.CreateDate.ToShortDateString()</div>
+                    </div>
+                    <div class="col-2"><div id="rateYo" score="@item.Score" class="rateYoClass"></div></div>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
