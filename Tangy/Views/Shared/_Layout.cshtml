@@ -82,9 +82,13 @@
                 @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
                 {
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link " id="navbarDropdown" asp-controller="Rights" asp-action="Index" role="button" aria-haspopup="true" aria-expanded="false">
                             זכויות
                         </a>
+                        @*<div class="dropdown-menu" style="text-align:right;left:unset;" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-controller="Rights" asp-action="Show" asp-route-rightId="הנחה לאנשים עם נכות באוטובוסים, ברכבת הקלה ובמטרונית">ילד נכה</a>
+                        </div>*@
+
                     </li>
                 }
                 @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))

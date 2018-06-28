@@ -1,0 +1,119 @@
+﻿@using Tangy.Models.RightsPannelViewModel
+@{
+    ViewData["Title"] = "זכויות";
+}
+
+<h2>זכויות</h2>
+
+<hr />
+@{ 
+    List<String> rights = new List<string>();
+    String title = string.Empty;
+
+}
+
+<div>
+    <div class="row">
+        @{
+            rights = new List<string>()
+            { "סיוע חינם בתביעות נכות מהמוסד לביטוח לאומי","יד מכוונת - ייעוץ והכוונה חינם לוועדות רפואיות של הביטוח הלאומי","שכר טרחה עבור סיוע בתביעות מול המוסד לביטוח לאומי (\"חוק לבנת פורן\")" };
+            title = "הגשת תביעות נכות";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+        @{
+            rights = new List<string>()
+            { "גמלת ילד נכה והטבות נלוות", "גמלת ניידות עבור ילד", "גמלה לילד מונשם" };
+            title = "גמלאות";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+        @{
+            rights = new List<string>()
+            { "אוטיסטים","חירשים וכבדי שמיעה","עיוורים ולקויי ראיה","לקויות למידה והפרעות קשב וריכוז","נפגעי נפש","מוגבלות שכלית התפתחותית","מחלות כרוניות","לקויות מוטוריות","ילדים חולי סרטן" };
+            title = "סוגי לקויות";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+
+    </div>
+
+    <div class="row">
+        @{
+            rights = new List<string>
+                ()
+            { "חינוך מיוחד ושילוב בחינוך","חינוך ביתי לילד עם צרכים מיוחדים","חינוך לילדים חולים בביתם","חינוך לילדים המאושפזים בבית חולים","סייעת רפואית לילדים הלומדים בחינוך הרגיל" };
+            title = "חינוך";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+        @{
+            rights = new List<string>()
+            { "בריאות ילדים ונוער","אבחון רפואי התפתחותי לילדים (שירותי התפתחות הילד)","טיפולים פרא רפואיים לילדים (שירותי התפתחות הילד)","פטור מתשלומים בקופות החולים למקבלי גמלת ילד נכה","פטור מתשלומים בקופות החולים לילדים מקבלי גמלת ניידות" };
+            title = "בריאות";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+        @{
+            rights = new List<string>()
+            { "טיפולי שיניים לאנשים עם מוגבלויות","טיפולי שיניים בבית איזי שפירא","טיפולי שיניים בהרדמה מלאה" };
+            title = "טיפולי שיניים";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+    </div>
+    <div class="row">
+        @{
+            rights = new List<string>
+                ()
+            { "השאלה וסיוע במימון של ציוד שיקומי ורפואי","מימון מכשירי תקשורת תומכת וחלופית" };
+            title = "יוד שיקומי ומכשירי עזר";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+        @{
+            rights = new List<string>()
+            { "נגישות","רישום מוקדם למוסד חינוכי לצורך הנגשתו","הנגשת בתי ספר","נגישות לאנשים עם מוגבלות ולנכים בתחנות אוטובוס","נגישות לאנשים עם מוגבלות ולנכים באוטובוסים","נגישות לאנשים עם מוגבלות ולנכים ברכבות","קבלת שירות ללא תור במקומות ציבוריים לאדם עם מוגבלות","פטור מתשלום למלווה של אדם עם מוגבלות במקומות ציבוריים" };
+            title = "נגישות";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+        @{
+            rights = new List<string>()
+            { "גמלת ניידות עבור ילד","תג חניה לנכה ופטור מתשלום אגרת רישוי","הקצאה וסימון אזור חניה לנכה בסמוך לביתו","הנחה באוטובוסים לאנשים עם נכות" };
+            title = "תחבורה וניידות";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+    </div>
+    <div class="row">
+        @{
+            rights = new List<string>
+                ()
+            { "דירות נכסי רכישה (נ\"ר)","הנחה במס רכישה לילדים עם נכות בשיעור של 100%","הנחה בארנונה להורים שילדם מקבל גמלת ילד נכה או קצבת נכות","סיוע בהתאמת תנאי דיור לאנשים המוגבלים בניידות" };
+            title = "דיור";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+        @{
+            rights = new List<string>
+                ()
+                { "נופש, טיולים ופעילויות בטבע","נופשון הקלה - אירוח לילדים ובני נוער עם צרכים מיוחדים","תכנית רעים - קבוצות חברתיות לילדים עם קשיי תקשורת","הכנת בני נוער להתנדבות בצה\"ל","מרכז רב מקצועי הוליסטי לבעלי צרכים מיוחדים ומשפחותיהם","המרכז הרב-תחומי של הורים לילדים עם צרכים מיוחדים מטעם \"ארגון הורים למערכת החינוך בירושלים\"" };
+            title = "תמיכה ופנאי";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+        @{
+            rights = new List<string>
+                ()
+                    { "מדריך למשפחה שיש בה ילד עם לקות או מחלה ממושכת","פטור ממס במשיכת כספים מקופת גמל לבני משפחה של אנשים עם נכות","פטור ממס במשיכת כספים מקופת גמל לעמיתים הנושאים בהוצאות רפואיות גבוהות","ימי מחלה לצורך סיוע אישי של הורה לאדם עם מוגבלות","נקודות זיכוי ממס הכנסה בעד ילד או בוגר עם מוגבלות","זיכוי במס הכנסה עבור ילד בדיור מחוץ לבית ההורים","איסור אפליית עובד בשל היותו בן משפחה של אדם עם מוגבלות","פיצויי פיטורים לעובד שהתפטר עקב בריאות לקויה של בן משפחתו","איסור פיטורי עובד שנעדר מעבודתו בשל מצב ביטחוני" };
+            title = "זכויות ההורים";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+    </div>
+    <div class="row">
+        @{
+            rights = new List<string>
+                ()
+            { "משיכת כספים מתכנית \"חיסכון לכל ילד\" לפני גיל 18 בשל מצבו הרפואי של הילד" };
+            title = "הטבות כספיות אחרות";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+        @{
+            rights = new List<string>()
+            { "תביעה בעקבות לידת אדם עם נכות בשל כשל באבחון או רשלנות רפואית","הנגשת הליך עדות בבית משפט לאנשים עם מוגבלות שכלית או אוטיזם" };
+            title = "הליכים משפטיים";
+            @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
+        }
+        <div class="col"></div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+﻿@model string
+@{
+    ViewData["Title"] = "ShowRight";
+}
+
+<h2>@Model</h2>
+
+<hr />
+
+
+<div class="form-border">
+    <div id="article"></div>
+</div>
+
+@section Scripts {
+
+    <script>
+
+        $(document).ready(function () {
+            $.ajax({
+                url: "https://www.kolzchut.org.il/w/he/api.php",
+                data: {
+                    format: "json",
+                    action: "parse",
+                    page: "@Model",
+                    prop: "text",
+
+                },
+                dataType: 'jsonp',
+                headers: {
+                    'Api-User-Agent': 'MyCoolTool/1.1 (http://example.com/MyCoolTool/; MyCoolTool@example.com) BasedOnSuperLib/1.4'
+                },
+                success: function (data) {
+                    console.log(data)
+                    //      $("#article").html(data.parse.text["*"])
+                    //alert(data.parse.text["*"]);
+                    var markup = data.parse.text["*"];
+
+                    markup = markup.replace("ראו_גם:", "toBeRemoved");
+                    markup = markup.replace("sr-only", "");
+
+                    var i = $('#article').html(markup);
+
+                    // remove links as they will not work
+                    i.find('a').each(function () { $(this).replaceWith($(this).html()); });
+                    // remove any references
+                    i.find('sup').remove();
+
+                    // remove cite error
+                    i.find('.mw-ext-cite-error').remove();
+
+                    // remove [עריכה]
+                    i.find('.mw-editsection').remove();
+
+                    //remove ראו_גם:
+                    i.find("#toBeRemoved").remove();
+
+                    i.find(".wr-sharebar-print").remove();
+                    i.find(".wr-sharebar-send").remove();
+                    i.find(".wr-sharebar-getlink").remove();
+                    i.find(".sharebar-section").remove();
+                    i.find(".wr-languagelinks").parent().remove();
+
+
+                    return;
+
+                    $('#article').html($(i).find('p'));
+
+
+                }
+            });
+
+    });
+
+    </script>
+}
