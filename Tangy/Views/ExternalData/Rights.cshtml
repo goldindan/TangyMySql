@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Tangy.Models.ExternalDataViewModels.RightsViewModel>
+@{
+    ViewData["Title"] = "זכויות";
+}
+
+<h2>זכויות - משרד העבודה, הרווחה והשירותים החברתיים</h2>
+<hr />
+
+@{
+    List<String> populations =
+        (from item in Model
+         select item.Populations).Distinct().ToList();
+}
+
+@for (int i = 0; i < populations.Count(); i+=3)
+{
+<div class="row">
+    @if (populations.Count() > i)
+    {
+        @Html.Partial("_RightPartial", Model.Where(r => r.Populations.Equals(populations[i])).ToList());
+    }
+    @if (populations.Count() > i + 1)
+    {
+        @Html.Partial("_RightPartial", Model.Where(r => r.Populations.Equals(populations[i + 1])).ToList());
+    }
+    @if (populations.Count() > i + 2)
+    {
+        @Html.Partial("_RightPartial", Model.Where(r => r.Populations.Equals(populations[i+2])).ToList());
+    }
+</div>
+}

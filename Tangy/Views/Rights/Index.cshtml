@@ -1,9 +1,9 @@
 ﻿@using Tangy.Models.RightsPannelViewModel
 @{
-    ViewData["Title"] = "זכויות";
+    ViewData["Title"] = "זכויות מאתר כל זכות";
 }
 
-<h2>זכויות</h2>
+<h2>זכויות מאתר כל זכות</h2>
 
 <hr />
 @{ 
@@ -22,7 +22,7 @@
         }
         @{
             rights = new List<string>()
-            { "גמלת ילד נכה והטבות נלוות", "גמלת ניידות עבור ילד", "גמלה לילד מונשם" };
+            { "גמלת ילד נכה והטבות נלוות", "גמלת ניידות עבור ילד", "תוספת לגמלת ילד נכה עבור ילד מונשם" };
             title = "גמלאות";
             @Html.Partial("_RightsPannelPartial", new RightsPannelViewModel() { Title = title, Rights = rights });
         }

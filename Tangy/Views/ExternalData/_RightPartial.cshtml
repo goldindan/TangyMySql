@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Tangy.Models.ExternalDataViewModels.RightsViewModel>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="col p-2">
+    <div class="row p-0 m-0 mt-4" style="height:24px;">
+        <div class="pl-2" id="icon"><i class="fas fa-list-ul" style="color:#abb96c"></i></div>
+        @{
+            String populat = Model.First().Populations;
+            if (populat.Length > 25)
+            {
+                populat = populat.Substring(0, 25) + "...";
+
+            }
+        }
+        <div class="align-text-bottom" id="title" style="color:#abb96c"><h5>@populat</h5></div>
+    </div>
+    <div class="p-1 pt-3" style="height:auto; background-color:beige; border-top:3px solid #abb96c;color:#abb96c;">
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#myModal-@item.Id" style="color:black">@item.Right</a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <!-- The Modal -->
+    <div class="modal" id="myModal-@item.Id">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">@item.Right</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    @Html.Raw(item.RightsEligibilityDetails)
+                    <b>מסמכים:</b><br />
+                    @Html.Raw(item.Documents)
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">סגירה</button>
+                </div>
+
+            </div>
+        </div>
+    </div>}
+
