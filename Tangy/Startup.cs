@@ -48,6 +48,8 @@ namespace Tangy
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.CookieHttpOnly = true;
             });
+
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Tangy.Models.ExternalDataViewModels.RehabilitationHousingData>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="col p-2">
+    <div class="row p-0 m-0 mt-4" style="height:24px;">
+        <div class="pl-2" id="icon"><i class="fas fa-list-ul" style="color:#abb96c"></i></div>
+        @{
+            String district = Model.First().District;
+            if (district.Length > 25)
+            {
+                district = district.Substring(0, 25) + "...";
+            }
+        }
+        <div class="align-text-bottom" id="title" style="color:#abb96c"><h5>@district</h5></div>
+    </div>
+    <div class="p-1 pt-3" style="height:auto; background-color:beige; border-top:3px solid #abb96c;color:#abb96c;">
+        <ul>
+            @foreach (var item in Model)
+            {
+            <li>
+                <a href="#" data-toggle="modal" data-target="#myModal-@item.Id" style="color:black">@item.GIshuvName - @item.InstitutionName - (@item.AgeGroup)</a>
+            </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <!-- The Modal -->
+<div class="modal" id="myModal-@item.Id">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">@item.InstitutionName @item.AgeGroup</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                @Html.Raw(item.InstitutionTypeDetails)
+                <br />
+                מנהל: @item.ManagerName
+                <br />
+                טלפון: @item.Phone
+                <br />
+                נייד: @item.Mobile
+                <br />
+                אימייל: @item.Email
+                <br />
+                כתובה: @item.Address - @item.GIshuvName
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">סגירה</button>
+            </div>
+
+        </div>
+    </div>
+</div>}
+

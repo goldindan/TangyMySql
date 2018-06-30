@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Tangy.Models.ExternalDataViewModels.BlindServicesData>
+@{
+    ViewData["Title"] = "שירותים לעיוורים ולקויי ראייה ובני משפחתם";
+}
+
+<h2>שירותים לעיוורים ולקויי ראייה ובני משפחתם</h2>
+<hr />
+
+@{
+    List<String> districts =
+        (from item in Model
+         select item.District).Distinct().ToList();
+}
+
+@for (int i = 0; i < districts.Count(); i += 3)
+{
+    <div class="row">
+        @if (districts.Count() > i)
+        {
+            @Html.Partial("_BlindServicesDataPartial", Model.Where(r => r.District.Equals(districts[i])).OrderBy(r => r.CityName).ToList());
+        }
+        @if (districts.Count() > i + 1)
+        {
+            @Html.Partial("_BlindServicesDataPartial", Model.Where(r => r.District.Equals(districts[i + 1])).OrderBy(r => r.CityName).ToList());
+        }
+        @if (districts.Count() > i + 2)
+        {
+            @Html.Partial("_BlindServicesDataPartial", Model.Where(r => r.District.Equals(districts[i + 2])).OrderBy(r => r.CityName).ToList());
+        }
+    </div>
+}
+
+
