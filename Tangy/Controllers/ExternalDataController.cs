@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using ExcelDataReader;
 using Microsoft.AspNetCore.Mvc;
+using Tangy.Models;
 using Tangy.Models.ExternalDataViewModels;
 
 namespace Tangy.Controllers
 {
     public class ExternalDataController : Controller
     {
+        private int PageSize = 200;
+
         public IActionResult Index()
         {
             return View();
@@ -240,7 +243,8 @@ namespace Tangy.Controllers
             }
             return true;
         }
-        public async Task<IActionResult> OtcPriceList()
+
+        public async Task<IActionResult> OtcPriceList(int productPage = 1)
         {
             string path = Path.Combine(
                 Directory.GetCurrentDirectory(), "wwwroot\\externalFiles",
@@ -283,7 +287,8 @@ namespace Tangy.Controllers
 
             return View(prescriptionDrugsPriceListDatas);
         }
-        public async Task<IActionResult> PrescriptionDrugsPriceList()
+
+        public async Task<IActionResult> PrescriptionDrugsPriceList(int productPage = 1)
         {
 
             string path = Path.Combine(
@@ -302,7 +307,7 @@ namespace Tangy.Controllers
             //using (Stream stream = req.GetResponse().GetResponseStream())
             using (var stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read))
             {
-                
+
                 // Auto-detect format, supports:
                 //  - Binary Excel files (2.0-2003 format; *.xls)
                 //  - OpenXml Excel files (2007 format; *.xlsx)
@@ -327,14 +332,14 @@ namespace Tangy.Controllers
                     {
                         int code = 0;
 
-                        if(Int32.TryParse(row[0].ToString(), out code))
+                        if (Int32.TryParse(row[0].ToString(), out code))
                         {
                             PrescriptionDrugsPriceListData prescriptionDrugsPriceListData = new PrescriptionDrugsPriceListData()
                             {
                                 Code = code.ToString(),
                                 DrugName = row[1].ToString(),
                                 PackageSize = row[2].ToString(),
-                                MaximumRetailprice = Double.Parse(row[3].ToString()==string.Empty?"0": row[3].ToString()),
+                                MaximumRetailprice = Double.Parse(row[3].ToString() == string.Empty ? "0" : row[3].ToString()),
                                 MaximumRetailMargin = row[4].ToString(),
                                 MaximumConsumerPrice = Double.Parse(row[5].ToString() == string.Empty ? "0" : row[5].ToString()),
                                 MaximumConsumerPriceIncludingVAT = Double.Parse(row[6].ToString() == string.Empty ? "0" : row[6].ToString()),
@@ -349,7 +354,24 @@ namespace Tangy.Controllers
                 }
             }
 
-            return View(prescriptionDrugsPriceListDatas);
+            int count = prescriptionDrugsPriceListDatas.Count;
+
+            PrescriptionDrugsPriceListDataViewModel prescriptionDrugsPriceListDataViewModel =
+                new PrescriptionDrugsPriceListDataViewModel()
+                {
+                    PrescriptionDrugsPriceListDatas = prescriptionDrugsPriceListDatas
+                                                        .Skip((productPage - 1) * PageSize)
+                                                        .Take(PageSize).ToList(),
+                    PagingInfo = new PagingInfo()
+                    {
+                        CurrentPage = productPage,
+                        ItemsPerPage = PageSize,
+                        TotalItem = count
+                    }
+                };
+
+
+            return View(prescriptionDrugsPriceListDataViewModel);
         }
     }
 }

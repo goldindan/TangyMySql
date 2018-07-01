@@ -1,4 +1,4 @@
-﻿@model  IEnumerable<Tangy.Models.ExternalDataViewModels.PrescriptionDrugsPriceListData>
+﻿@model Tangy.Models.ExternalDataViewModels.PrescriptionDrugsPriceListDataViewModel
 @{
     ViewData["Title"] = "מחירון לתרופות במרשם";
 }
@@ -10,67 +10,77 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Code)
+                    @Html.DisplayNameFor(model => model.PrescriptionDrugsPriceListDatas[0].Code)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DrugName)
+                    @Html.DisplayNameFor(model => model.PrescriptionDrugsPriceListDatas[0].DrugName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PackageSize)
+                    @Html.DisplayNameFor(model => model.PrescriptionDrugsPriceListDatas[0].PackageSize)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MaximumRetailprice)
+                    @Html.DisplayNameFor(model => model.PrescriptionDrugsPriceListDatas[0].MaximumRetailprice)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MaximumRetailMargin)
+                    @Html.DisplayNameFor(model => model.PrescriptionDrugsPriceListDatas[0].MaximumRetailMargin)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MaximumConsumerPrice)
+                    @Html.DisplayNameFor(model => model.PrescriptionDrugsPriceListDatas[0].MaximumConsumerPrice)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MaximumConsumerPriceIncludingVAT)
+                    @Html.DisplayNameFor(model => model.PrescriptionDrugsPriceListDatas[0].MaximumConsumerPriceIncludingVAT)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CodeWillHeal)
+                    @Html.DisplayNameFor(model => model.PrescriptionDrugsPriceListDatas[0].CodeWillHeal)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CodePharmaSoft)
+                    @Html.DisplayNameFor(model => model.PrescriptionDrugsPriceListDatas[0].CodePharmaSoft)
                 </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.PrescriptionDrugsPriceListDatas)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(model => item.Code)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.DrugName)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.PackageSize)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.MaximumRetailprice)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.MaximumRetailMargin)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.MaximumConsumerPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.MaximumConsumerPriceIncludingVAT)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.CodeWillHeal)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.CodePharmaSoft)
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.DrugName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.PackageSize)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.MaximumRetailprice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.MaximumRetailMargin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.MaximumConsumerPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.MaximumConsumerPriceIncludingVAT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.CodeWillHeal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.CodePharmaSoft)
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-md-auto">
+            <div page-model="@Model.PagingInfo" page-action="PrescriptionDrugsPriceList" page-classes-enabled="true"
+                 page-class="btn border" page-class-normal="btn btn-default active"
+                 page-class-selected="btn btn-primary active" class="btn-group m-1"></div>
+        </div>
+        <div class="col"></div>
+    </div>
+
 </div>
