@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -207,68 +208,148 @@ namespace Tangy.Controllers
             return View(blindServicesDatas);
         }
 
-        public IActionResult PrescriptionDrugsPriceList()
+        private void SaveBytesToFile(string filename, byte[] bytesToWrite)
         {
-            //https://data.gov.il/dataset/76a500c1-f6a9-4276-8606-eccf41962a1f/resource/f40d2fa0-4082-43be-b029-4872d81c8251/download/prescriptiondrugspricelist1.xlsx
+            if (filename != null && filename.Length > 0 && bytesToWrite != null)
+            {
+                if (!Directory.Exists(Path.GetDirectoryName(filename)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(filename));
 
-            var req = WebRequest.Create("https://data.gov.il/dataset/76a500c1-f6a9-4276-8606-eccf41962a1f/resource/f40d2fa0-4082-43be-b029-4872d81c8251/download/prescriptiondrugspricelist1.xlsx");
+                FileStream file = System.IO.File.Create(filename);
 
-            //// Create a request for the URL.   
-            //WebRequest request = WebRequest.Create(
-            //  "https://data.gov.il/dataset/76a500c1-f6a9-4276-8606-eccf41962a1f/resource/f40d2fa0-4082-43be-b029-4872d81c8251/download/prescriptiondrugspricelist1.xlsx");
-            //// If required by the server, set the credentials.  
-            ////request.Credentials = CredentialCache.DefaultCredentials;
-            //// Get the response.  
-            //WebResponse response = request.GetResponse();
-            //// Display the status.  
-            ////Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-            //// Get the stream containing content returned by the server.  
-            //Stream dataStream = response.GetResponseStream();
-            //// Open the stream using a StreamReader for easy access.  
-            //StreamReader reader = new StreamReader(dataStream);
-            //// Read the content.  
-            //string responseFromServer = reader.ReadToEnd();
-            //// Display the content.  
-            //Console.WriteLine(responseFromServer);
-            //// Clean up the streams and the response.  
-            //reader.Close();
-            //response.Close();
+                file.Write(bytesToWrite, 0, bytesToWrite.Length);
 
+                file.Close();
+            }
+        }
 
+        private async Task<bool> DownloadNewFile(string url, string path)
+        {
+            using (var client = new System.Net.Http.HttpClient())
+            {
 
+                using (var result = await client.GetAsync(url))
+                {
+                    if (result.IsSuccessStatusCode)
+                    {
+                        byte[] fileBytes = await result.Content.ReadAsByteArrayAsync();
 
-            var filePath = "https://data.gov.il/dataset/76a500c1-f6a9-4276-8606-eccf41962a1f/resource/f40d2fa0-4082-43be-b029-4872d81c8251/download/prescriptiondrugspricelist1.xlsx";
+                        SaveBytesToFile(path, fileBytes);
+                    }
+                }
+            }
+            return true;
+        }
+        public async Task<IActionResult> OtcPriceList()
+        {
+            string path = Path.Combine(
+                Directory.GetCurrentDirectory(), "wwwroot\\externalFiles",
+                "otcPriceList.xlsx");
 
-            using (Stream stream = req.GetResponse().GetResponseStream())
-            //using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+            string url = "https://data.gov.il/dataset/25908429-78f1-450c-8507-20bcfb5a8a22/resource/69d10416-680b-4bc9-900a-62dd9e82430c/download/otc-price-list.xlsx";
+
+            List<PrescriptionDrugsPriceListData> prescriptionDrugsPriceListDatas = new List<PrescriptionDrugsPriceListData>();
+
+            if (!System.IO.File.Exists(path) || (System.IO.File.Exists(path) && System.IO.File.GetCreationTime(path) < DateTime.Now.AddDays(-7)))
+            {
+                await DownloadNewFile(url, path);
+            }
+
+            using (var stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    var result = reader.AsDataSet();
+
+                    foreach (DataRow row in result.Tables[0].Rows)
+                    {
+                        int code = 0;
+
+                        if (Int32.TryParse(row[0].ToString(), out code))
+                        {
+                            PrescriptionDrugsPriceListData prescriptionDrugsPriceListData = new PrescriptionDrugsPriceListData()
+                            {
+                                Code = code.ToString(),
+                                DrugName = row[1].ToString(),
+                                PackageSize = row[2].ToString(),
+                                MaximumConsumerPrice = Double.Parse(row[3].ToString() == string.Empty ? "0" : row[3].ToString()),
+                                MaximumConsumerPriceIncludingVAT = Double.Parse(row[4].ToString() == string.Empty ? "0" : row[4].ToString()),
+                            };
+                            prescriptionDrugsPriceListDatas.Add(prescriptionDrugsPriceListData);
+                        }
+                    }
+                }
+            }
+
+            return View(prescriptionDrugsPriceListDatas);
+        }
+        public async Task<IActionResult> PrescriptionDrugsPriceList()
+        {
+
+            string path = Path.Combine(
+                Directory.GetCurrentDirectory(), "wwwroot\\externalFiles",
+                "prescriptiondrugspricelist1.xlsx");
+
+            string url = "https://data.gov.il/dataset/76a500c1-f6a9-4276-8606-eccf41962a1f/resource/f40d2fa0-4082-43be-b029-4872d81c8251/download/prescriptiondrugspricelist1.xlsx";
+
+            List<PrescriptionDrugsPriceListData> prescriptionDrugsPriceListDatas = new List<PrescriptionDrugsPriceListData>();
+
+            if (!System.IO.File.Exists(path) || (System.IO.File.Exists(path) && System.IO.File.GetCreationTime(path) < DateTime.Now.AddDays(-7)))
+            {
+                await DownloadNewFile(url, path);
+            }
+
+            //using (Stream stream = req.GetResponse().GetResponseStream())
+            using (var stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read))
             {
                 
                 // Auto-detect format, supports:
                 //  - Binary Excel files (2.0-2003 format; *.xls)
                 //  - OpenXml Excel files (2007 format; *.xlsx)
-                using (var reader = ExcelReaderFactory.CreateBinaryReader(stream))
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
 
                     // Choose one of either 1 or 2:
 
                     // 1. Use the reader methods
-                    do
-                    {
-                        while (reader.Read())
-                        {
-                            // reader.GetDouble(0);
-                        }
-                    } while (reader.NextResult());
+                    //do
+                    //{
+                    //    while (reader.Read())
+                    //    {
+                    //        // reader.GetDouble(0);
+                    //    }
+                    //} while (reader.NextResult());
 
                     // 2. Use the AsDataSet extension method
                     var result = reader.AsDataSet();
 
-                    int a = 0;
+                    foreach (DataRow row in result.Tables[0].Rows)
+                    {
+                        int code = 0;
+
+                        if(Int32.TryParse(row[0].ToString(), out code))
+                        {
+                            PrescriptionDrugsPriceListData prescriptionDrugsPriceListData = new PrescriptionDrugsPriceListData()
+                            {
+                                Code = code.ToString(),
+                                DrugName = row[1].ToString(),
+                                PackageSize = row[2].ToString(),
+                                MaximumRetailprice = Double.Parse(row[3].ToString()==string.Empty?"0": row[3].ToString()),
+                                MaximumRetailMargin = row[4].ToString(),
+                                MaximumConsumerPrice = Double.Parse(row[5].ToString() == string.Empty ? "0" : row[5].ToString()),
+                                MaximumConsumerPriceIncludingVAT = Double.Parse(row[6].ToString() == string.Empty ? "0" : row[6].ToString()),
+                                CodeWillHeal = row[7].ToString(),
+                                CodePharmaSoft = row[8].ToString()
+                            };
+                            prescriptionDrugsPriceListDatas.Add(prescriptionDrugsPriceListData);
+                        }
+                    }
+
                     // The result of each spreadsheet is in result.Tables
                 }
             }
 
-            return View();
+            return View(prescriptionDrugsPriceListDatas);
         }
     }
 }

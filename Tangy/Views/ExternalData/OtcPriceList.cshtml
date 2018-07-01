@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Tangy.Models.ExternalDataViewModels.PrescriptionDrugsPriceListData>
+@{
+    ViewData["Title"] = "מחירון לתרופות שלא במרשם";
+}
+
+<h2>מחירון לתרופות שלא במרשם</h2>
+
+<div class="form-border">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DrugName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PackageSize)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaximumConsumerPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaximumConsumerPriceIncludingVAT)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.DrugName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.PackageSize)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.MaximumConsumerPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.MaximumConsumerPriceIncludingVAT)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
