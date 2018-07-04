@@ -8,6 +8,7 @@ namespace Tangy.Utility
     public class SD
     {
         public const string DefaultFoodImage = "circle.png";
+        public const string DefaultLinkImage = "link.png";
         public const string AdminEndUser = "Admin";
         public const string CustomerEndUser = "Customer";
 

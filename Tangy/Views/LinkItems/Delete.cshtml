@@ -1,0 +1,67 @@
+﻿@model Tangy.Models.LinkItem
+@using Tangy.Extensions
+@{
+    ViewData["Title"] = "מחיקה";
+}
+
+<br />
+<h2>מחיקת קישור</h2>
+<br />
+<form method="post">
+    <div class="form-border row">
+        <div class="col-8">
+            <input type="hidden" asp-for="Id" />
+            <fieldset disabled>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Subject" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Subject" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Description" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Description" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Url" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Url" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="OrderId" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="OrderId" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="isActive" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="isActive" class="form-check-input" />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-3">
+            <img src="@Model.Image" width="100%" style="border-radius: 5px; border:1px solid #bbb9b9;" />
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="מחק" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-success">חזרה לרשימה</a>
+        </div>
+    </div>
+</form>

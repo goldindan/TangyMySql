@@ -15,7 +15,6 @@ namespace Tangy.Models
         [Display(Name = "מיקום תצוגה")]
         public int OrderId { get; set; }
 
-        [Required]
         [Display(Name = "תמונה")]
         public String Image{ get; set; }
 

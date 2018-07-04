@@ -1,0 +1,79 @@
+﻿@model Tangy.Models.LinkItem
+@using Tangy.Extensions
+@{
+    ViewData["Title"] = "פרטי קישור";
+}
+
+<h2>פרטי קישור</h2>
+<hr />
+<div class="form-border row">
+    <input type="hidden" asp-for="Id" />
+    <fieldset class="col-7" disabled>
+        <div class="col ">
+            <div class="form-group row ">
+                <div class="col-2 ">
+                    <label asp-for="Subject" class="custom-label"></label>
+                </div>
+                <div class="col ">
+                    <input asp-for="Subject" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Description" class="custom-label"></label>
+                </div>
+                <div class="col">
+                    <input asp-for="Description" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Url" class="custom-label"></label>
+                </div>
+                <div class="col">
+                    <input asp-for="Url" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="OrderId" class="custom-label"></label>
+                </div>
+                <div class="col">
+                    <input asp-for="OrderId" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="isActive" class="custom-label"></label>
+                </div>
+                <div class="col">
+                    <input asp-for="isActive" class="form-check-input" />
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div class="col-1"></div>
+    <div class="col-3">
+        <img src="@Model.Image" width="100%" style="border-radius: 5px; border:1px solid #bbb9b9;" />
+    </div>
+    <br />
+    <div class="form-group">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">עדכן</a>
+        <a asp-action="Index" class="btn btn-success">חזרה לרשימה</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).on('change', ':file', function () {
+            var input = $(this),
+                numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [numFiles, label]);
+
+            $('#filename').val(label);
+        });
+    </script>
+}

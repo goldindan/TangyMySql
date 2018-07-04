@@ -33,6 +33,7 @@
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="wwwroot\externalFiles\" />
+    <Folder Include="wwwroot\images-link\" />
   </ItemGroup>
 
   <ItemGroup>
