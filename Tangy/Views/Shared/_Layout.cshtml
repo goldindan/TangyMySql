@@ -54,6 +54,7 @@
                             <a class="dropdown-item" asp-controller="TherapyTypes" asp-action="Index">סוגי טיפול</a>
                             <a class="dropdown-item" asp-controller="MedicalFields" asp-action="Index">מחלקות רפואיות</a>
                             <a class="dropdown-item" asp-controller="Users" asp-action="Index">משתמשים</a>
+                            <a class="dropdown-item" asp-controller="LinkItems" asp-action="Index">קישורים</a>
                         </div>
                     </li>
                 }
@@ -80,13 +81,13 @@
                     </li>
                 }
                 @*@if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
-                {
-                    <li class="nav-item dropdown">
-                        <a class="nav-link " id="navbarDropdown" asp-controller="Rights" asp-action="Index" role="button" aria-haspopup="true" aria-expanded="false">
-                            זכויות
-                        </a>
-                    </li>
-                }*@
+        {
+            <li class="nav-item dropdown">
+                <a class="nav-link " id="navbarDropdown" asp-controller="Rights" asp-action="Index" role="button" aria-haspopup="true" aria-expanded="false">
+                    זכויות
+                </a>
+            </li>
+        }*@
                 @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
                 {
                     <li class="nav-item dropdown">
@@ -111,6 +112,22 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             קישורים
+                        </a>
+                    </li>
+                }
+                @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            טיולים מונגשים
+                        </a>
+                    </li>
+                }
+                @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            צור קשר
                         </a>
                     </li>
                 }

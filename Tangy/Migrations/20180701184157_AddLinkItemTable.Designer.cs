@@ -11,9 +11,10 @@ using Tangy.Data;
 namespace Tangy.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180701184157_AddLinkItemTable")]
+    partial class AddLinkItemTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -296,14 +297,6 @@ namespace Tangy.Migrations
                         .IsRequired();
 
                     b.Property<int>("OrderId");
-
-                    b.Property<string>("Subject")
-                        .IsRequired();
-
-                    b.Property<string>("Url")
-                        .IsRequired();
-
-                    b.Property<bool>("isActive");
 
                     b.HasKey("Id");
 

@@ -31,6 +31,7 @@ namespace Tangy.Data
         public DbSet<MedicalField> MedicalField { get; set; }
         public DbSet<Doctor> Doctor { get; set; }
         public DbSet<DoctorReview> DoctorReview { get; set; }
+        public DbSet<LinkItem> LinkItem { get; set; }
 
 
 
