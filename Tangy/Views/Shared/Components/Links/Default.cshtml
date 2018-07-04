@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Tangy.Models.LinkItem>
+@{
+    ViewData["Title"] = "Default";
+}
+
+
+<div class="w-100">
+
+
+    @foreach (var item in Model)
+    {
+        @Html.Partial("_LinkPartial", item)
+    }
+
+</div>

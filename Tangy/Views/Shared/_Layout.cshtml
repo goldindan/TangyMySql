@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Tangy</title>
+    <title>@ViewData["Title"]</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -80,14 +80,6 @@
                         </div>
                     </li>
                 }
-                @*@if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
-        {
-            <li class="nav-item dropdown">
-                <a class="nav-link " id="navbarDropdown" asp-controller="Rights" asp-action="Index" role="button" aria-haspopup="true" aria-expanded="false">
-                    זכויות
-                </a>
-            </li>
-        }*@
                 @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
                 {
                     <li class="nav-item dropdown">
@@ -113,6 +105,17 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             טיולים מונגשים
                         </a>
+                    </li>
+                }
+                @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            עזרה מבפנים
+                        </a>
+                        <div class="dropdown-menu" style="text-align:right;left:unset;" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-controller="ExternalData" asp-action="Rights">כל אחד במקצוע שלו</a>
+                        </div>
                     </li>
                 }
                 @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
