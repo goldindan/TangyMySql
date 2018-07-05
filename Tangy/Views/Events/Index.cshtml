@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Tangy.Models.Event>
+@{
+    ViewData["Title"] = "אירועים";
+}
+
+<h2>ניהול אירועים</h2>
+
+<hr />
+<p>
+    <a asp-action="Create" type="button" class="btn btn-primary">
+        <i class="fas fa-plus"></i>
+        &nbsp; חדש...
+    </a>
+</p>
+
+<div class="form-border">
+    <div class="container">
+        <div class="row font-weight-bold">
+            <div class="col">
+                @Html.DisplayNameFor(model => model.OrderId)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(model => model.Name)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(model => model.IsActive)
+            </div>
+            <div class="col">
+            </div>
+        </div>
+
+        <hr style="border: none;height: 1px;color: #333; background-color: #333;" />
+
+        @foreach (var item in Model)
+        {
+        <div class="row">
+            <div class="col">
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(modelItem => item.Name)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </div>
+            @Html.Partial("_DivButtonPartial", item.Id)
+        </div>
+        <hr />
+        }
+    </div>
+</div>

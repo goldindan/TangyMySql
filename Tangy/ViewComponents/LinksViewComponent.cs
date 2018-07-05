@@ -20,7 +20,7 @@ namespace Tangy.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var linksDb = await _db.LinkItem.ToListAsync();
+            var linksDb = await _db.LinkItem.Where(l=>l.isActive).OrderBy(l=>l.OrderId).ToListAsync();
 
             return View(linksDb);
         }

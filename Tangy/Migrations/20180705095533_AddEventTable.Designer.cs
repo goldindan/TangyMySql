@@ -11,9 +11,10 @@ using Tangy.Data;
 namespace Tangy.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180705095533_AddEventTable")]
+    partial class AddEventTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -302,8 +303,6 @@ namespace Tangy.Migrations
                         .IsRequired();
 
                     b.Property<int>("OrderId");
-
-                    b.Property<string>("Placement");
 
                     b.Property<DateTime?>("StartDate");
 

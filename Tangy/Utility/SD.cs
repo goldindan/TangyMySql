@@ -9,6 +9,7 @@ namespace Tangy.Utility
     {
         public const string DefaultFoodImage = "circle.png";
         public const string DefaultLinkImage = "link.png";
+        public const string DefaultEventImage = "link.png";
         public const string AdminEndUser = "Admin";
         public const string CustomerEndUser = "Customer";
 
