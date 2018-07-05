@@ -3,8 +3,8 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-<div style="background-color:aliceblue">
-    <div>@Model.Subject</div>
-    <div>@Model.Description</div>
-    <div><img src="@Model.Image" /></div>
+<div class="mt-1 pb-3 pt-1 rounded border" style="background-color:#E2F8FB;cursor: pointer;" onclick="window.open('@Model.Url','mywindow');" >
+    <div class="text-center font-weight-bold" style="background-color:#97D4DD">@Model.Subject</div>
+    <div class="text-center font-italic small mb-2 mt-2">@Model.Description</div>
+    <div class="text-center"><img src="@Model.Image" width="75%" /></div>
 </div>
