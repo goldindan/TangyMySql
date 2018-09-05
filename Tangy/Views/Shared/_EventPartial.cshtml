@@ -1,0 +1,48 @@
+﻿@model Tangy.Models.Event
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div>
+    <img src="@Model.Image" style="height:210px; width:360px" />
+</div>
+<div>
+    <h4>@Model.Name</h4>
+</div>
+<div class="text-right" style="padding-right:80px;">
+    <i class="far fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;@Model.StartDate.Value.ToShortDateString()
+</div>
+<div class="text-right" style="padding-right:80px;">
+    <i class="far fa-clock"></i>&nbsp;&nbsp;&nbsp;@Model.StartDate.Value.ToShortTimeString()
+</div>
+<div class="text-right" style="padding-right:80px;">
+    <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;@Model.Placement
+</div>
+<div class="pt-3">
+    <input type="button" class="btn btn-primary" value="פרטים נוספים" data-toggle="modal" data-target="#myModal-@Model.Id" />
+</div>
+
+
+<!-- The Modal -->
+<div class="modal" id="myModal-@Model.Id">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">@Model.Name</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                @Model.Description
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">סגירה</button>
+            </div>
+
+        </div>
+    </div>
+</div>

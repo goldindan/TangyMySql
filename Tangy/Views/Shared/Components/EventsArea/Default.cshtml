@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Tangy.Models.Event>
+@{
+    ViewData["Title"] = "Default";
+}
+<br />
+<div class="col-12 align-content-md-center text-center"><h2>אירועים עתידיעים</h2></div>
+<hr />
+@for (int i = 0; i < Model.Count(); i += 3)
+{
+<div class="row">
+    @if (Model.Count() > i)
+    {
+    <div class="col text-center p-3">
+        @Html.Partial("_EventPartial", Model.ElementAt(i))
+    </div>
+    }
+    @if (Model.Count() > i + 1)
+    {
+    <div class="col text-center p-3">
+        @Html.Partial("_EventPartial", Model.ElementAt(i+1))
+    </div>
+    }
+    @if (Model.Count() > i + 2)
+    {
+    <div class="col text-center p-3">
+        @Html.Partial("_EventPartial", Model.ElementAt(i+2))
+    </div>
+    }
+</div>
+}

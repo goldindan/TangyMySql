@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Tangy.Models.LinkItem>
+@{
+    ViewData["Title"] = "Default";
+}
+
+<div class="col-12 align-content-md-center text-center"><h2>קישורים חשובים</h2></div>
+<hr />
+@for (int i = 0; i < Model.Count(); i += 3)
+{
+    <div class="row">
+        @if (Model.Count() > i)
+        {
+            <div class="col text-center p-3">
+                @Html.Partial("_LinkPartial", Model.ElementAt(i))
+            </div>
+        }
+        @if (Model.Count() > i + 1)
+        {
+            <div class="col text-center p-3">
+                @Html.Partial("_LinkPartial", Model.ElementAt(i + 1))
+            </div>
+        }
+        @if (Model.Count() > i + 2)
+        {
+            <div class="col text-center p-3">
+                @Html.Partial("_LinkPartial", Model.ElementAt(i + 2))
+            </div>
+        }
+    </div>
+}
+<hr />

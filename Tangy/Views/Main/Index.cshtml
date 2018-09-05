@@ -3,10 +3,11 @@
 }
 
 
-<div class="row col p-0">
+    <div class="col-12 border" style="background-color:gainsboro">@await Component.InvokeAsync("EventsArea")</div>
+    <div class="col-12 border" style="background-color:aliceblue">@await Component.InvokeAsync("LinksArea")</div>
     <div class="col-2 row pr-0 pl-0">@await Component.InvokeAsync("Links")</div>
     <div class="col-10 ">
-        <div class="row col-12 pr-0 pl-0" style="margin-left:10px; margin-right:10px;">@await Component.InvokeAsync("Events")</div>
+        @*<div class="row col-12 pr-0 pl-0" style="margin-left:10px; margin-right:10px;">@await Component.InvokeAsync("Events")</div>*@
         <pre class="font-italic font-weight-bold text-center mt-5" style="font-family:Arial;font-size:large;">
 האתר "הבית למשפחות מיוחדות במודיעין" הינה יוזמה של הורים פעילים בעיר, 
 אשר פתחו את האתר במטרה ליצור מרחב עבור תושבי מודיעין מכבים רעות
@@ -19,7 +20,6 @@
  modiinsfamily@gmail.com או בטלפון 074-7048609 / 055-9214212.
 </pre>
     </div>
-</div>
 
 
 
