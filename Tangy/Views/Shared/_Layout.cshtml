@@ -85,11 +85,22 @@
                 {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            מאגרים
+                            זכויות
                         </a>
                         <div class="dropdown-menu" style="text-align:right;left:unset;" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" asp-controller="ExternalData" asp-action="Rights">זכויות לאוכלוסיות רווחה</a>
                             <a class="dropdown-item" asp-controller="Rights" asp-action="Index">זכויות מאתר כל זכות</a>
+                        </div>
+
+                    </li>
+                }
+                @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            מאגרים
+                        </a>
+                        <div class="dropdown-menu" style="text-align:right;left:unset;" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" asp-controller="ExternalData" asp-action="MentalRetardationHousingData">מסגרות מגורים לאנשים עם מוגבלות שכלית התפתחותית</a>
                             <a class="dropdown-item" asp-controller="ExternalData" asp-action="RehabilitationHousingData">מסגרות מגורים לאנשים עם נכויות פיזיות</a>
                             <a class="dropdown-item" asp-controller="ExternalData" asp-action="BlindServicesData">שירותים לעיוורים ולקויי ראייה ובני משפחתם</a>
@@ -106,16 +117,22 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             טיולים מונגשים
                         </a>
+                        <div class="dropdown-menu" style="text-align:right;left:unset;" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-controller="ExternalData" asp-action="Rights">בארץ</a>
+                            <a class="dropdown-item" asp-controller="ExternalData" asp-action="Rights">בחו"ל</a>
+                        </div>
+
                     </li>
                 }
                 @if (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.AdminEndUser))
                 {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            עזרה מבפנים
+                            המלצות
                         </a>
                         <div class="dropdown-menu" style="text-align:right;left:unset;" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" asp-controller="ExternalData" asp-action="Rights">כל אחד במקצוע שלו</a>
+                            <a class="dropdown-item" asp-controller="ExternalData" asp-action="Rights">בתי עסק ידידותיים בעיר</a>
+                            <a class="dropdown-item" asp-controller="ExternalData" asp-action="Rights">אנשי מקצוע משלנו</a>
                         </div>
                     </li>
                 }
@@ -131,21 +148,35 @@
         </div>
 
         <div class="form-inline">
-            @await Html.PartialAsync("_loginPartial")
+            @await Html.PartialAsync("_loginPartial") 
         </div>
 
     </nav>
-    <div class="body-content">
+    <div class="container body-content">
+        <br />
         @RenderBody()
         <br />
         <hr />
     </div>
 
-    @*<footer class="footer">
-        <div class="cont">
-            <p class="text-muted" style="text-align:right;">&copy; 2018 - המרכז למשפחה, למשפחות לילדים עם צרכים מיוחדים</p>
+    <footer class="footer bg-info" style="height:50px" >
+        <div class="cont row ">
+            <div class="col-10 ">
+                <p class="text-white" style="text-align:right;">&copy; 2018 - המרכז למשפחה, למשפחות לילדים עם צרכים מיוחדים</p>
+            </div>
+            <div class="col-2 pt-2" style="text-align:left">
+                <a class="pr-2" href="tel:074-7048609" target="_blank">
+                    <i class="fas fa-phone-square fa-2x" style="color:darkblue"></i>
+                </a>
+                <a class="pr-2" href="mailto:modiinsfamily@gmail.com" target="_blank">
+                    <i class="fas fa-envelope fa-2x" style="color:darkblue"></i>
+                </a>
+                <a class="pr-2" href="https://www.facebook.com/groups/MishpahotMeiuhadotModiin" target="_blank">
+                    <i class="fab fa-facebook-square fa-2x" style="color:darkblue"></i>
+                </a>
+            </div>
         </div>
-    </footer>*@
+    </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
